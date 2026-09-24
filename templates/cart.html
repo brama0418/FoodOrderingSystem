@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Cart - Food Ordering System</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f5f9ff;
+            color: #101d3b;
+        }
+
+        /* Navbar */
+
+        nav {
+            background-color: #101d3b;
+            padding: 15px 40px;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            color: white;
+            font-size: 22px;
+            font-weight: bold;
+            margin-right: auto;
+        }
+
+        .logo span {
+            color: #ff7a00;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            font-size: 16px;
+        }
+
+        nav a:hover {
+            color: #ff7a00;
+        }
+
+        /* Heading */
+
+        h1 {
+            text-align: center;
+            margin: 45px 0 30px;
+            color: #101d3b;
+        }
+
+        /* Cart */
+
+        .cart-container {
+            width: 90%;
+            max-width: 1000px;
+            margin: auto;
+            background-color: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Table */
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background-color: #101d3b;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        /* Quantity */
+
+        .quantity-btn {
+            display: inline-block;
+            text-decoration: none;
+            background-color: #ff7a00;
+            color: white;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            border-radius: 6px;
+            font-weight: bold;
+            margin: 0 8px;
+        }
+
+        .quantity-btn:hover {
+            background-color: #e56700;
+        }
+
+        /* Remove */
+
+        .remove-btn {
+            color: red;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .remove-btn:hover {
+            color: darkred;
+        }
+
+        /* Grand Total */
+
+        .grand-total {
+            text-align: right;
+            margin-top: 25px;
+            font-size: 22px;
+            font-weight: bold;
+            color: #16823b;
+        }
+
+        /* Order button */
+
+        .order-btn {
+            display: block;
+            width: 200px;
+            margin: 25px 0 0 auto;
+            padding: 13px;
+            background-color: #ff7a00;
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .order-btn:hover {
+            background-color: #e56700;
+        }
+
+        /* Empty cart */
+
+        .empty-cart {
+            text-align: center;
+            padding: 50px;
+            font-size: 20px;
+            color: #777;
+        }
+
+        .empty-cart a {
+            color: #ff7a00;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Mobile */
+
+        @media (max-width: 600px) {
+
+            nav {
+                padding: 15px;
+            }
+
+            nav a {
+                margin-left: 10px;
+                font-size: 14px;
+            }
+
+            .cart-container {
+                width: 95%;
+                padding: 10px;
+                overflow-x: auto;
+            }
+
+            table {
+                min-width: 650px;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Navbar -->
+
+    <nav>
+
+        <div class="logo">
+            🍔 <span>Food Ordering System</span>
+        </div>
+
+        <div>
+
+            <a href="/">Home</a>
+
+            <a href="/menu">Menu</a>
+
+            <a href="/cart">Cart</a>
+
+            <a href="/orders">Orders</a>
+
+        </div>
+
+    </nav>
+
+
+    <h1>🛒 Your Cart</h1>
+
+
+    <div class="cart-container">
+
+        {% if cart_items %}
+
+        <table>
+
+            <tr>
+
+                <th>Food Name</th>
+
+                <th>Price</th>
+
+                <th>Quantity</th>
+
+                <th>Total</th>
+
+                <th>Action</th>
+
+            </tr>
+
+
+            {% for item in cart_items %}
+
+            <tr>
+
+                <!-- Food Name -->
+
+                <td>
+                    {{ item[2] }}
+                </td>
+
+
+                <!-- Price -->
+
+                <td>
+                    ₹{{ item[3] }}
+                </td>
+
+
+                <!-- Quantity -->
+
+                <td>
+
+                    <a class="quantity-btn" href="/decrease/{{ item[0] }}">
+                        −
+                    </a>
+
+                    {{ item[4] }}
+
+                    <a class="quantity-btn" href="/increase/{{ item[0] }}">
+                        +
+                    </a>
+
+                </td>
+
+
+                <!-- Item Total -->
+
+                <td>
+                    ₹{{ item[3] * item[4] }}
+                </td>
+
+
+                <!-- Remove -->
+
+                <td>
+
+                    <a class="remove-btn" href="/remove/{{ item[0] }}">
+                        Remove
+                    </a>
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+
+        <!-- Grand Total -->
+
+        <div class="grand-total">
+
+            Grand Total: ₹{{ total }}
+
+        </div>
+
+
+        <!-- Place Order -->
+
+        <a class="order-btn" href="/place-order">
+
+            Place Order
+
+        </a>
+
+
+        {% else %}
+
+        <div class="empty-cart">
+
+            🛒 Your cart is empty.
+
+            <br><br>
+
+            <a href="/menu">
+                Go to Menu
+            </a>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</body>
+
+</html>

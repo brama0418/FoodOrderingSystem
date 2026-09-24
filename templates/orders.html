@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Orders - Food Ordering System</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f5f9ff;
+            color: #101d3b;
+        }
+
+        /* Navbar */
+
+        nav {
+            background-color: #101d3b;
+            padding: 15px 40px;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            color: white;
+            font-size: 22px;
+            font-weight: bold;
+            margin-right: auto;
+        }
+
+        .logo span {
+            color: #ff7a00;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            font-size: 16px;
+        }
+
+        nav a:hover {
+            color: #ff7a00;
+        }
+
+        /* Heading */
+
+        h1 {
+            text-align: center;
+            margin: 45px 0 30px;
+            color: #101d3b;
+        }
+
+        /* Orders container */
+
+        .orders-container {
+            width: 90%;
+            max-width: 1000px;
+            margin: auto;
+            background-color: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Table */
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background-color: #101d3b;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        /* Order status */
+
+        .status {
+            color: #16823b;
+            font-weight: bold;
+        }
+
+        /* Empty orders */
+
+        .empty-orders {
+            text-align: center;
+            padding: 50px;
+            font-size: 20px;
+            color: #777;
+        }
+
+        .menu-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 25px;
+            background-color: #ff7a00;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .menu-btn:hover {
+            background-color: #e56700;
+        }
+
+        /* Mobile */
+
+        @media (max-width: 600px) {
+
+            nav {
+                padding: 15px;
+            }
+
+            nav a {
+                margin-left: 10px;
+                font-size: 14px;
+            }
+
+            .orders-container {
+                width: 95%;
+                padding: 10px;
+                overflow-x: auto;
+            }
+
+            table {
+                min-width: 600px;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Navbar -->
+
+    <nav>
+
+        <div class="logo">
+            🍔 <span>Food Ordering System</span>
+        </div>
+
+        <div>
+
+            <a href="/">Home</a>
+
+            <a href="/menu">Menu</a>
+
+            <a href="/cart">Cart</a>
+
+            <a href="/orders">Orders</a>
+
+        </div>
+
+    </nav>
+
+
+    <h1>📦 My Orders</h1>
+
+
+    <div class="orders-container">
+
+        {% if orders %}
+
+        <table>
+
+            <tr>
+
+                <th>Order ID</th>
+
+                <th>Food Name</th>
+
+                <th>Quantity</th>
+
+                <th>Total</th>
+
+                <th>Status</th>
+
+            </tr>
+
+
+            {% for order in orders %}
+
+            <tr>
+
+                <!-- Order ID -->
+
+                <td>
+                    #{{ order[0] }}
+                </td>
+
+
+                <!-- Food Name -->
+
+                <td>
+                    {{ order[1] }}
+                </td>
+
+
+                <!-- Quantity -->
+
+                <td>
+                    {{ order[2] }}
+                </td>
+
+
+                <!-- Total -->
+
+                <td>
+                    ₹{{ order[3] }}
+                </td>
+
+
+                <!-- Status -->
+
+                <td class="status">
+                    Ordered
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+        {% else %}
+
+        <div class="empty-orders">
+
+            📦 No orders yet.
+
+            <br>
+
+            <a class="menu-btn" href="/menu">
+                Browse Menu
+            </a>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</body>
+
+</html>
